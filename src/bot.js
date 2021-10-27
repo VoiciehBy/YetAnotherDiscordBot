@@ -4,44 +4,25 @@ dotenv.config();
 const { Client, Intents } = require("discord.js");
 const { joinVoiceChannel } = require("@discordjs/voice");
 const botClient = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-const PREFIX = '!';
-
-const hiReply = "Hehe,hihiho!!1";
-const byReply = "Cze,ja spadam,:D.";
-const defaultReply = "Nie ma takiej komendy,XDddd.";
-
-const commands = ["siema", "won", "połącz"];
-const commands_desc = ["wyświetla " + "'" + hiReply + "'", "rozłącza bota", "podłącza bota do serwera głosowego"];
+const constants = require("./constants");
+var util = require("./utility");
 
 function onReady() {
     console.log("Bot is ready");
 } botClient.on('ready', () => onReady());
 
-function ifMsgComesFromBot(message) { return message.author.bot; }
-function isCommmand(message) { return message.content.startsWith(PREFIX) && message.channelId == process.env.BOT_CHANNEL_ID; }
-function getCommandName(message) {
-    if (message.content.length > 1) return message.content.trim().substring(PREFIX.length);
-    else return '!';
-}
-function commandsHelp() {
-    cH = "";
-    for (i = 0; i < commands.length; i++)
-        cH += commands[i] + " - " + commands_desc[i] + "\n";
-    return cH;
-}
-
 
 function handleCommands(message) {
-    if (isCommmand(message)) {
-        switch (getCommandName(message)) {
-            case "siema":
-                message.reply(hiReply);
+    if (util.isCommmand(message)) {
+        switch (util.getCommandName(message)) {
+            case constants.commands[0]:
+                message.reply(constants.hiReply);
                 break;
-            case "won":
-                message.reply(byReply);
+            case constants.commands[1]:
+                message.reply(constants.byReply);
                 botClient.destroy(process.env.BOT_TOKEN);
                 break;
-            case "połącz":
+            case constants.commands[2]:
                 const channel = message.channel;
                 joinVoiceChannel({
                     channelId: process.env.BOT_VOICE_CHANNEL_ID,
@@ -49,18 +30,18 @@ function handleCommands(message) {
                     adapterCreator: channel.guild.voiceAdapterCreator,
                 });
                 break;
-            case "?":
-                message.reply(commandsHelp());
+            case constants.commands[3]:
+                message.reply(util.commandsHelp());
                 break;
             default:
-                message.reply(defaultReply);
+                message.reply(constants.defaultReply);
                 break;
         }
     }
 }
 
 function onMsgCreate(message) {
-    if (ifMsgComesFromBot(message)) return;
+    if (util.ifMsgComesFromBot(message)) return;
     else handleCommands(message);
 }
 
