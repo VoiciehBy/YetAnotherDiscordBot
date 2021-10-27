@@ -2,10 +2,10 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const { Client, Intents } = require("discord.js");
-const { joinVoiceChannel } = require("@discordjs/voice");
 const botClient = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const constants = require("./constants");
-var util = require("./utility");
+const util = require("./utility");
+const cmd = require("./commands");
 
 function onReady() {
     console.log("Bot is ready");
@@ -14,27 +14,24 @@ function onReady() {
 
 function handleCommands(message) {
     if (util.isCommmand(message)) {
-        switch (util.getCommandName(message)) {
+        var cmd_name = util.getCommandName(message);
+        var channel = message.channel;
+
+        switch (cmd_name) {
             case constants.commands[0]:
-                message.reply(constants.hiReply);
+                cmd.sayHi(message);
                 break;
             case constants.commands[1]:
-                message.reply(constants.byReply);
-                botClient.destroy(process.env.BOT_TOKEN);
+                cmd.disconnect(message);
                 break;
             case constants.commands[2]:
-                const channel = message.channel;
-                joinVoiceChannel({
-                    channelId: process.env.BOT_VOICE_CHANNEL_ID,
-                    guildId: channel.guild.id,
-                    adapterCreator: channel.guild.voiceAdapterCreator,
-                });
+                cmd.jVC(channel);
                 break;
             case constants.commands[3]:
-                message.reply(util.commandsHelp());
+                cmd.printHelp(message);
                 break;
             default:
-                message.reply(constants.defaultReply);
+                cmd.sayThereIsNoSuchCommand(message);
                 break;
         }
     }
