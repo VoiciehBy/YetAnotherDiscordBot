@@ -1,5 +1,5 @@
-const dotenv = require("dotenv");
-dotenv.config();
+const lib = require("./lib");
+lib.dotenv.config();
 
 const { Client, Intents } = require("discord.js");
 const botClient = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
@@ -8,7 +8,7 @@ const util = require("./utility");
 const cmd = require("./commands");
 
 function onReady() {
-    console.log("Bot is ready");
+    console.log("Bot is ready...");
 } botClient.on('ready', () => onReady());
 
 
@@ -22,7 +22,7 @@ function handleCommands(message) {
                 cmd.sayHi(message);
                 break;
             case constants.commands[1]:
-                cmd.disconnect(message);
+                cmd.disconnect(botClient);
                 break;
             case constants.commands[2]:
                 cmd.jVC(channel);
@@ -41,7 +41,6 @@ function onMsgCreate(message) {
     if (util.ifMsgComesFromBot(message)) return;
     else handleCommands(message);
 }
-
 botClient.on('messageCreate', (message) => onMsgCreate(message));
 
 botClient.login(process.env.BOT_TOKEN);

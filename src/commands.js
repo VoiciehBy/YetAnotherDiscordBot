@@ -6,9 +6,9 @@ function sayHi(message) {
     message.reply(constants.hiReply);
 }
 
-function disconnect(message) {
-    message.reply(constants.byReply);
-    botClient.destroy(process.env.BOT_TOKEN);
+function disconnect(botClient) {
+    console.log(constants.byReply);
+    botClient.destroy();
 }
 
 function jVC(channel) {
@@ -19,7 +19,7 @@ function jVC(channel) {
     });
 }
 
-function printHelp(message){
+function printHelp(message) {
     message.reply(util.commandsHelp());
 }
 
@@ -28,9 +28,9 @@ function sayThereIsNoSuchCommand(message) {
 }
 
 module.exports = {
- sayHi,
- disconnect,
- jVC,
- printHelp,
- sayThereIsNoSuchCommand
+    sayHi,
+    disconnect,
+    jVC,
+    printHelp,
+    sayThereIsNoSuchCommand
 };
