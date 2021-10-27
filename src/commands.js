@@ -13,9 +13,9 @@ function disconnect(botClient) {
 
 function jVC(channel) {
     joinVoiceChannel({
-        channelId: process.env.BOT_VOICE_CHANNEL_ID,
+        channelId: channel.id,
         guildId: channel.guild.id,
-        adapterCreator: channel.guild.voiceAdapterCreator,
+        adapterCreator: channel.guild.voiceAdapterCreator
     });
 }
 

@@ -13,9 +13,14 @@ function commandsHelp() {
     return cH;
 }
 
+function getVoiceChannel(message) {
+    return message.member.voice.channel;
+}
+
 module.exports = {
     ifMsgComesFromBot,
     isCommmand,
     getCommandName,
-    commandsHelp
+    commandsHelp,
+    getVoiceChannel
 };

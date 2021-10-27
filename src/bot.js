@@ -15,8 +15,6 @@ function onReady() {
 function handleCommands(message) {
     if (util.isCommmand(message)) {
         var cmd_name = util.getCommandName(message);
-        var channel = message.channel;
-
         switch (cmd_name) {
             case constants.commands[0]:
                 cmd.sayHi(message);
@@ -25,6 +23,7 @@ function handleCommands(message) {
                 cmd.disconnect(botClient);
                 break;
             case constants.commands[2]:
+                const channel = util.getVoiceChannel(message);
                 cmd.jVC(channel);
                 break;
             case constants.commands[3]:
