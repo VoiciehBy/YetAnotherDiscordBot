@@ -30,6 +30,7 @@ function handleCommands(message) {
                 cmd.printHelp(message);
                 break;
             default:
+                cmd.playVideo(message);
                 cmd.sayThereIsNoSuchCommand(message);
                 break;
         }
