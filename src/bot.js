@@ -20,17 +20,20 @@ function handleCommands(message) {
                 cmd.sayHi(message);
                 break;
             case constants.commands[1]:
-                cmd.disconnect(botClient);
-                break;
-            case constants.commands[2]:
                 const channel = util.getVoiceChannel(message);
                 cmd.jVC(channel);
                 break;
+            case constants.commands[2]:
+                cmd.disconnect(botClient);
+                break;
             case constants.commands[3]:
+                const c = message.channel;
+                cmd.purgeChannel(c);
+                break;
+            case constants.commands[4]:
                 cmd.printHelp(message);
                 break;
             default:
-                cmd.playVideo(message);
                 cmd.sayThereIsNoSuchCommand(message);
                 break;
         }
@@ -38,7 +41,7 @@ function handleCommands(message) {
 }
 
 function onMsgCreate(message) {
-    if (util.ifMsgComesFromBot(message)) return;
+    if (!(util.ifMsgOnTheChannel(message, process.env.BOT_CHANNEL_ID)) || util.ifMsgComesFromBot(message)) return;
     else handleCommands(message);
 }
 botClient.on('messageCreate', (message) => onMsgCreate(message));

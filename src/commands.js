@@ -1,19 +1,14 @@
 const constants = require("./constants");
 const util = require("./utility");
 const lib = require("./lib");
-const { joinVoiceChannel, getVoiceConnection, createAudioPlayer ,createAudioResource} = require("@discordjs/voice");
+const { joinVoiceChannel, getVoiceConnection, createAudioPlayer, createAudioResource } = require("@discordjs/voice");
 
 function sayHi(message) {
     message.reply(constants.hiReply);
 }
 
-function disconnect(botClient) {
-    console.log(constants.byReply);
-    botClient.destroy();
-}
-
 function jVC(channel) {
-    if(!channel) {
+    if (!channel) {
         console.error("channel is null");
         return;
     }
@@ -24,12 +19,21 @@ function jVC(channel) {
     });
 }
 
-function playVideo(message){
-    
+function disconnect(botClient) {
+    console.log(constants.byReply);
+    botClient.destroy();
+}
+
+function playVideo(message) {
+
 }
 
 function printHelp(message) {
     message.reply(util.commandsHelp());
+}
+
+function purgeChannel(channel) {
+    channel.bulkDelete(100)
 }
 
 function sayThereIsNoSuchCommand(message) {
@@ -42,5 +46,6 @@ module.exports = {
     jVC,
     playVideo,
     printHelp,
+    purgeChannel,
     sayThereIsNoSuchCommand
 };

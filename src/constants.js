@@ -3,8 +3,8 @@ const hiReply = "Hehe,hihiho!!1";
 const byReply = "Cze,ja spadam,:D.";
 const defaultReply = "Nie ma takiej komendy,XDddd.";
 
-const commands = ["siema", "won", "połącz", "pomoc"];
-const commands_desc = ["wyświetla " + "'" + hiReply + "'", "rozłącza bota", "podłącza bota do serwera głosowego", "wyświetla pomoc"];
+const commands = ["siema", "połącz", "won", "czyść", "pomoc"];
+const commands_desc = ["wyświetla " + "'" + hiReply + "'", "podłącza bota do serwera głosowego", "rozłącza bota", "wyświetla pomoc"];
 
 module.exports = {
     PREFIX,
