@@ -1,15 +1,19 @@
 const lib = require("./lib");
 lib.dotenv.config();
 
-const { Client, Intents } = require("discord.js");
-const botClient = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+const { Intents } = require("discord.js");
+const botClient = require("./botClient.js");
+
+const bot = new botClient({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+
+
 const constants = require("./constants");
 const util = require("./utility");
 const cmd = require("./commands");
 
 function onReady() {
     console.log("Bot is ready...");
-} botClient.on('ready', () => onReady());
+} bot.on('ready', () => onReady());
 
 
 function handleCommands(message) {
@@ -24,7 +28,7 @@ function handleCommands(message) {
                 cmd.jVC(channel);
                 break;
             case constants.commands[2]:
-                cmd.disconnect(botClient);
+                cmd.disconnect(bot);
                 break;
             case constants.commands[3]:
                 const c = message.channel;
@@ -44,6 +48,6 @@ function onMsgCreate(message) {
     if (!(util.ifMsgOnTheChannel(message, process.env.BOT_CHANNEL_ID)) || util.ifMsgComesFromBot(message)) return;
     else handleCommands(message);
 }
-botClient.on('messageCreate', (message) => onMsgCreate(message));
+bot.on('messageCreate', (message) => onMsgCreate(message));
 
-botClient.login(process.env.BOT_TOKEN);
+bot.login(process.env.BOT_TOKEN);
